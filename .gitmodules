@@ -1,0 +1,6 @@
+[submodule "lib/bcdec"]
+	path = lib/bcdec
+	url = https://github.com/iOrange/bcdec.git
+[submodule "lib/Binary-Reader"]
+	path = lib/Binary-Reader
+	url = https://github.com/Puxtril/Binary-Reader.git
