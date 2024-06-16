@@ -9,6 +9,7 @@
 
 #include "ui_MainWindow.h"
 #include "ImageViewer.h"
+#include "ClampedSpinbox.h"
 #include "Meta.h"
 
 class MainWindow : public QObject, private Ui_MainWindow

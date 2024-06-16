@@ -17,6 +17,11 @@ MainWindow::setupUi(QMainWindow* mainWindow)
 
     mainWindow->setWindowTitle(mainWindow->windowTitle() + " " + TEXVIEWER_VERSION_STR);
 
+    ClampedSpinbox* newSpinbox = new ClampedSpinbox({2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384});
+    this->WidthInput->hide();
+    this->ResolutionLayout->replaceWidget(this->WidthInput, newSpinbox);
+    this->WidthInput = newSpinbox;
+
     connect(this->FormatOptionsGroup, &QTabWidget::currentChanged, this, &MainWindow::formatTabChanged);
     connect(this->actionOpen, &QAction::triggered, this, &MainWindow::fileOpenTriggered);
     connect(&m_dialog, &QFileDialog::fileSelected, this, &MainWindow::fileSelected);
