@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.18)
-project(TexViewer)
+project(TexViewer VERSION 1.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -12,6 +12,8 @@ elseif(UNIX)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3 -Wall")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -O0 -ggdb")
 endif()
+
+configure_file(include/Meta.h.in include/Meta.h)
 
 file(GLOB TEX_VIEWER_SOURCES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*

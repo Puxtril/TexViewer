@@ -15,6 +15,8 @@ MainWindow::setupUi(QMainWindow* mainWindow)
     Ui_MainWindow::setupUi(mainWindow);
     m_viewer.setWidget(this->ImagePreviewArea);
 
+    mainWindow->setWindowTitle(mainWindow->windowTitle() + " " + TEXVIEWER_VERSION_STR);
+
     connect(this->FormatOptionsGroup, &QTabWidget::currentChanged, this, &MainWindow::formatTabChanged);
     connect(this->actionOpen, &QAction::triggered, this, &MainWindow::fileOpenTriggered);
     connect(&m_dialog, &QFileDialog::fileSelected, this, &MainWindow::fileSelected);
