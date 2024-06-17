@@ -31,10 +31,14 @@ jobs:
         run: |
           cd build
           cmake --build . --config Release
-      - name: Copy binaries to artifacts folder
+      - name: Link Qt Requirements
+        run: | 
+          & "windeployqt.exe" build/Release/TexViewer.exe
+      - name: Zip Exe and Qt Dependencies to Artifacts folder
         run: |
           mkdir artifacts
-          cp build/Release/TexViewer.exe artifacts
+          cd build\Release
+          cp TexViewer.exe,Qt6Core.dll,Qt6Gui.dll,Qt6Widgets.dll,d3dcompiler_47.dll,platforms ..\..\artifacts
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
