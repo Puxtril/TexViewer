@@ -1,0 +1,74 @@
+name: TexViewer compile
+run-name: Compile ${{ github.ref }}
+on: [push]
+jobs:
+  Compile-Windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Install qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: 6.7.1
+          host: 'windows'
+          arch: 'win64_msvc2019_64'
+          install-deps: 'true'
+          setup-python: 'true'
+          cache: 'true'
+      - name: Install MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+      - name: Init Submodules
+        run: |
+          cd lib
+          git submodule update --init
+      - name: Initilize CMake
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+      - name: Compile Project
+        run: |
+          cd build
+          cmake --build . --config Release
+      - name: Copy binaries to artifacts folder
+        run: |
+          mkdir artifacts
+          cp build/Release/TexViewer.exe artifacts
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: TexViewer-Windows
+          path: artifacts/
+  Compile-Ubuntu:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Install Ubuntu System requirements
+        run: |
+          sudo apt update
+          sudo apt install -y cmake gcc build-essential libgl1-mesa-dev qt6-base-dev
+      - name: Init Submodules
+        run: |
+          cd lib
+          git submodule update --init
+      - name: Initilize CMake
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+      - name: Compile Project
+        run: |
+          cd build
+          make
+      - name: Copy binaries to artifacts folder
+        run: |
+          mkdir artifacts
+          cp build/TexViewer artifacts/
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: TexViewer_Ubuntu22
+          path: artifacts/
+
