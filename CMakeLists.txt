@@ -37,7 +37,7 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ui)
 add_executable(TexViewer ${TEX_VIEWER_SOURCES} ${TEX_VIEWER_SOURCES_UI})
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
-target_link_libraries(TexViewer spdlog Qt6::Core Qt6::Gui Qt6::Widgets)
+target_link_libraries(TexViewer Qt6::Core Qt6::Gui Qt6::Widgets)
 
 install(
     TARGETS TexViewer
