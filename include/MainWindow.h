@@ -48,4 +48,5 @@ public slots:
     void bits1SpinChanged(int value);
     void bits2SpinChanged(int value);
     void bits3SpinChanged(int value);
+    void uncompressedFormatComboChanged(int index);
 };

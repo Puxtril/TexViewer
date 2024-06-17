@@ -75,10 +75,18 @@ ImageViewer::loadQImage()
     if (m_rawData == nullptr)
         return;
 
-    if (m_isCompressed)
-        loadQImageCompressed();
-    else
-        loadQImageUncompressed();
+    try
+    {
+        if (m_isCompressed)
+            loadQImageCompressed();
+        else
+            loadQImageUncompressed();
+    }
+    catch (std::invalid_argument& ex)
+    {
+        QPixmap pixmap;
+        m_labelViewer->setPixmap(pixmap);
+    }
 }
 
 void

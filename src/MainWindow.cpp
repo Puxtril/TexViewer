@@ -30,6 +30,8 @@ MainWindow::setupUi(QMainWindow* mainWindow)
     connect(this->OffsetInput, &QSpinBox::valueChanged, this, &MainWindow::offsetInputChanged);
     connect(this->WidthInput, &QSpinBox::valueChanged, this, &MainWindow::widthChanged);
 
+    connect(this->UncompressedFormatCombo, &QComboBox::currentIndexChanged, this, &MainWindow::uncompressedFormatComboChanged);
+
     connect(this->Channel1Combo, &QComboBox::currentIndexChanged, this, &MainWindow::channel0ComboChanged);
     connect(this->Channel2Combo, &QComboBox::currentIndexChanged, this, &MainWindow::channel1ComboChanged);
     connect(this->Channel3Combo, &QComboBox::currentIndexChanged, this, &MainWindow::channel2ComboChanged);
@@ -76,17 +78,21 @@ MainWindow::setupUi(QMainWindow* mainWindow)
     }
 
     this->Channel1Combo->setCurrentIndex(this->Channel1Combo->findData(ColorChannel::RED));
-    this->Channel1Spin->setRange(1, 63);
+    this->Channel1Spin->setRange(0, 63);
     this->Channel1Spin->setValue(8);
     this->Channel2Combo->setCurrentIndex(this->Channel1Combo->findData(ColorChannel::GREEN));
-    this->Channel2Spin->setRange(1, 63);
+    this->Channel2Spin->setRange(0, 63);
     this->Channel2Spin->setValue(8);
     this->Channel3Combo->setCurrentIndex(this->Channel1Combo->findData(ColorChannel::BLUE));
-    this->Channel3Spin->setRange(1, 63);
+    this->Channel3Spin->setRange(0, 63);
     this->Channel3Spin->setValue(8);
     this->Channel4Combo->setCurrentIndex(this->Channel1Combo->findData(ColorChannel::PADDING));
-    this->Channel4Spin->setRange(1, 63);
+    this->Channel4Spin->setRange(0, 63);
     this->Channel4Spin->setValue(0);
+
+    this->UncompressedFormatCombo->addItem("UNORM", UncompressedFormat::UNORM);
+    this->UncompressedFormatCombo->addItem("SNORM", UncompressedFormat::SNORM);
+    this->UncompressedFormatCombo->addItem("FLOAT", UncompressedFormat::FLOAT);
 
     m_uncompressedOptions.push_back({this->Channel1Combo, this->Channel1Spin});
     m_uncompressedOptions.push_back({this->Channel2Combo, this->Channel2Spin});
@@ -123,6 +129,7 @@ MainWindow::setUncompressedLayout()
         layout.bits.push_back(pair.second->value());
         layout.order.push_back(qvariant_cast<ColorChannel>(pair.first->currentData()));
     }
+    layout.format = qvariant_cast<UncompressedFormat>(this->UncompressedFormatCombo->currentData());
     m_viewer.setUncompressedStruct(layout);
 }
 
@@ -253,3 +260,8 @@ MainWindow::bits3SpinChanged(int value)
     uncompressedSpinChangedHandler(3, value);
 }
 
+void
+MainWindow::uncompressedFormatComboChanged(int index)
+{
+    setUncompressedLayout();
+}
