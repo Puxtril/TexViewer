@@ -13,7 +13,7 @@ elseif(UNIX)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -O0 -ggdb")
 endif()
 
-configure_file(include/Meta.h.in include/Meta.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/Meta.h.in ${CMAKE_CURRENT_BINARY_DIR}/configured/Meta.h)
 
 file(GLOB TEX_VIEWER_SOURCES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*
@@ -24,6 +24,7 @@ set(GLOB TEX_VIEWER_SOURCES_UI CONFIGURE_DEPENDS
 )
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_BINARY_DIR}/configured
     ${CMAKE_CURRENT_SOURCE_DIR}/lib/bcdec
     ${CMAKE_CURRENT_SOURCE_DIR}/lib/Binary-Reader/include
 )
