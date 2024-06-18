@@ -39,6 +39,11 @@ add_executable(TexViewer ${TEX_VIEWER_SOURCES} ${TEX_VIEWER_SOURCES_UI})
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 target_link_libraries(TexViewer Qt6::Core Qt6::Gui Qt6::Widgets)
 
+# Application will launch CMD window if this isn't set
+if (MSVC)
+    target_link_options(TexViewer PUBLIC /SUBSYSTEM:windows /ENTRY:mainCRTStartup)
+endif()
+
 install(
     TARGETS TexViewer
     DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
