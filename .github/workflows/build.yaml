@@ -38,7 +38,7 @@ jobs:
         run: |
           mkdir artifacts
           cd build\Release
-          cp TexViewer.exe,Qt6Core.dll,Qt6Gui.dll,Qt6Widgets.dll,d3dcompiler_47.dll,platforms ..\..\artifacts
+          Copy-Item -Recurse -Path TexViewer.exe,Qt6Core.dll,Qt6Gui.dll,Qt6Widgets.dll,d3dcompiler_47.dll,platforms -Destination ..\..\artifacts
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
