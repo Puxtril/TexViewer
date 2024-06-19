@@ -42,6 +42,8 @@ MainWindow::setupUi(QMainWindow* mainWindow)
     connect(this->Channel3Spin, &QSpinBox::valueChanged, this, &MainWindow::bits2SpinChanged);
     connect(this->Channel4Spin, &QSpinBox::valueChanged, this, &MainWindow::bits3SpinChanged);
 
+    connect(&this->m_viewer, &ImageViewer::errorMessage, this->statusbar, &QStatusBar::showMessage);
+
     this->WidthInput->setMaximum(16384);
     this->WidthInput->setMinimum(1);
     this->WidthInput->setValue(1024);

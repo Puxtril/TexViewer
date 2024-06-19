@@ -44,6 +44,13 @@ ImageViewer::setImageData(char* data, size_t size)
 void
 ImageViewer::setWidth(int width)
 {
+    if ((width & (width - 1)) != 0)
+    {
+        emit errorMessage("Width is not power of 2");
+        QPixmap pixmap;
+        m_labelViewer->setPixmap(pixmap);
+        return;
+    }
     m_width = width;
     loadQImage();
 }
@@ -82,10 +89,11 @@ ImageViewer::loadQImage()
         else
             loadQImageUncompressed();
     }
-    catch (std::invalid_argument& ex)
+    catch (std::exception& ex)
     {
         QPixmap pixmap;
         m_labelViewer->setPixmap(pixmap);
+        emit errorMessage(ex.what());
     }
 }
 
