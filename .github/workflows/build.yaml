@@ -47,7 +47,7 @@ jobs:
         run: |
           mkdir artifacts
           cd build\Release
-          Copy-Item -Recurse -Path TexViewer.exe,Qt6Core.dll,Qt6Gui.dll,Qt6Widgets.dll,d3dcompiler_47.dll,platforms -Destination ..\..\artifacts
+          Compress-Archive -DestinationPath ..\..\artifacts\Texviewer-Windows.zip -Path "TexViewer.exe" "Qt6Core.dll" "Qt6Gui.dll" "Qt6Widgets.dll" "d3dcompiler_47.dll" "platforms"
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -79,7 +79,7 @@ jobs:
       - name: Copy binaries to artifacts folder
         run: |
           mkdir artifacts
-          cp build/TexViewer artifacts/
+          cp build/TexViewer artifacts/TexViewer-Ubuntu22
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
