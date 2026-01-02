@@ -7,6 +7,9 @@ on:
     opened:
     edited:
 
+permissions:
+  contents: write
+
 jobs:
   Compile-Windows:
     runs-on: windows-latest
