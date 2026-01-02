@@ -47,7 +47,7 @@ jobs:
         run: |
           mkdir artifacts
           cd build\Release
-          Compress-Archive -DestinationPath ..\..\artifacts\Texviewer-Windows.zip -Path "TexViewer.exe" "Qt6Core.dll" "Qt6Gui.dll" "Qt6Widgets.dll" "d3dcompiler_47.dll" "platforms"
+          Compress-Archive -DestinationPath ..\..\artifacts\Texviewer-Windows.zip -Path "TexViewer.exe", "Qt6Core.dll", "Qt6Gui.dll", "Qt6Widgets.dll", "d3dcompiler_47.dll", "platforms"
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
