@@ -1,6 +1,12 @@
 name: TexViewer compile
-run-name: Compile ${{ github.ref }}
-on: [push]
+run-name: ${{ github.ref_name }} - ${{ github.event.head_commit.message }}
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+    opened:
+    edited:
+
 jobs:
   Compile-Windows:
     runs-on: windows-latest
@@ -40,10 +46,11 @@ jobs:
           cd build\Release
           Copy-Item -Recurse -Path TexViewer.exe,Qt6Core.dll,Qt6Gui.dll,Qt6Widgets.dll,d3dcompiler_47.dll,platforms -Destination ..\..\artifacts
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: TexViewer-Windows
           path: artifacts/
+
   Compile-Ubuntu:
     runs-on: ubuntu-22.04
     steps:
@@ -71,8 +78,34 @@ jobs:
           mkdir artifacts
           cp build/TexViewer artifacts/
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: TexViewer_Ubuntu22
+          name: TexViewer-Ubuntu22
           path: artifacts/
 
+  Create-Release:
+    runs-on: ubuntu-24.04
+    needs:  [Compile-Ubuntu, Compile-Windows]
+    #if: github.ref_type == 'tag'
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Download Windows artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: TexViewer-Windows
+        path: artifacts/
+    - name: Download Ubuntu artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: TexViewer-Ubuntu22
+        path: artifacts/
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        title: CI/CD Release DRAFT ${{ github.ref_name }}
+        draft: true
+        files: |
+          artifacts/*
