@@ -89,7 +89,7 @@ jobs:
   Create-Release:
     runs-on: ubuntu-24.04
     needs:  [Compile-Ubuntu, Compile-Windows]
-    #if: github.ref_type == 'tag'
+    if: github.ref_type == 'tag'
     steps:
     - name: Check out repository code
       uses: actions/checkout@v3
