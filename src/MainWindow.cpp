@@ -160,7 +160,7 @@ MainWindow::setupUi(QMainWindow* mainWindow)
     this->OffsetInput->hide();
     this->OffsetCombo->addItem("None", 0);
     this->OffsetCombo->addItem("DDS Header", 0x80);
-    this->OffsetCombo->addItem("DDS+DX10 Header", 0x80);
+    this->OffsetCombo->addItem("DDS+DX10 Header", 0x94);
     this->OffsetCombo->addItem("KTX1 Header", 0x44); // sizeof(KTX1Header) + 0 comment length + 4 bytes
     this->OffsetCombo->addItem("Custom", -1);
 }
